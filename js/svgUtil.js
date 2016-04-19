@@ -344,6 +344,7 @@ SvgUtil = (function(){
 			group.appendChild(frontElement);
 			
 			defineProperties(self, {
+				container: { value: container },
 				svgElement: { value: svg },
 				frontElement: { value: frontElement }
 			});
