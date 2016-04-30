@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="keywords" content="H5"/>
+	<meta name="description" content="H5"/>
+	<title>test</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js" integrity="sha256-7LkWEzqTdpEfELxcZZlS6wAx5Ff13zZ83lYO2/ujj7g=" crossorigin="anonymous"></script>
+	<script>window.jQuery||document.write('<script src="../js/jquery-1.11.3.min.js"><\/script>');</script>
+	<script src="../js/loading.js"></script>
+	<script src="../js/svgUtil.js"></script>
+<style>
+*{ margin:0; padding: 0;}
+body{ font-family:"microsoft yahei"; position: fixed; top:0; left:0; width: 100%; height: 100%;}
+table{ width: 100%; height: 100%;}
+th { height: 50px; line-height: 50px; font-size: 20px; }
+.loadingContainer { position: relative; }
+</style>
+<script>
+/*
+	loading calls js api.
+	jQuery is just used for Animation.
+	
+	no implement svgLoadingBar until now
+*/
+
+function onload(){
+	initLoadingBar();
+	initLoadingCircle();
+	initSvgArcLoading();	
+}
+
+function initAnimation(loading, progress){
+	//using jquery
+	$.fx.step['current'] = function(tween){ 
+		tween.elem.process(tween.now);
+	};
+	animation = new $.Animation(loading, {
+		'current': progress
+	}, $.speed( 1000, 'swing' , function(){
+		//setTimeout(function(){loading.hide();}, 1000)
+	}));
+}
+
+function initLoadingBar(){
+	loadingBar = new LoadingBar({ 
+		container: document.getElementById('loadingBar')  //when no setting container, it will show in fullscreen
+	});
+	loadingBar.hide();
+	loadingBar.start(10000);
+	initAnimation(loadingBar, 9000);
+	loadingBar.show();
+}
+function initLoadingCircle(){
+	loadingCircle = new LoadingCircle({ 
+		container: document.getElementById('loadingCircle'),
+		textType: LoadingBase.TextType.percentage
+	});
+	loadingCircle.hide();
+	loadingCircle.start(1);
+	initAnimation(loadingCircle, 1);
+	loadingCircle.show();
+}
+function initSvgArcLoading(){
+	svgArcLoading = new SvgUtil.ArcLoading({
+		container: document.getElementById('svgArcLoading'),
+		frontColor: 'url(#color2)', //'#3B8BC4'
+		//filter: 'url(#filter1)',
+		defs: {
+			linearGradients: {
+				'color1': { id: 'color1', stops: [ { offset: 0, color: '#fe9778'}, { offset: 1, color: '#ccc'} ] }
+			},
+			radialGradients: {
+				'color2': { id: 'color2', stops: [ { offset: 0, color: '#3B8BC4'}, { offset: 1, color: '#ccc'} ] }
+			},
+			filters:{
+				'filter1': { id: 'filter1', type: 'feGaussianBlur', stdDeviation: 1 }
+			}
+		}
+	});
+	svgArcLoading.start(1);
+	initAnimation(svgArcLoading, 1);
+	svgArcLoading.show();
+}
+</script>
+</head>
+<body onload="onload()">
+	<table>
+		<tr>
+			<th>loadingBar</th><th>loadingCircle</th>
+		</tr>
+		<tr>
+			<td><div id="loadingBar" class="loadingContainer"></div></td>
+			<td><div id="loadingCircle" class="loadingContainer"></td>
+		</tr>
+		<tr>
+svgArcLoading		</tr>
+		<tr>
+			<td><div id="svgLoadingBar" class="loadingContainer"></div></td>
+			<td><div id="svgArcLoading" class="loadingContainer"></td>
+		</tr>
+	</table>
+</body>
+</html>
