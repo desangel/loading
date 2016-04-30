@@ -1,0 +1,6 @@
+{
+  "name": "Loading.js",
+  "tagline": "javaScript loading UI, serveral div, svg, canvas ",
+  "body": "# loading\r\njavaScript loading UI, serveral ways to achieve (div, svg, canvas) \r\n## [page](http://desangel.github.com/loading/)\r\n## Example\r\n[base use](http://desangel.github.com/loading/example/index.html)\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
